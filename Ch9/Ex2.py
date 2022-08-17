@@ -4,11 +4,11 @@
 print("перше повідомленя:")
 print(" ")
 
-for x in range(0, 13, 2):
+for x in range(0, len(повідомленя), 2):
     print(повідомленя[x])
 print(" ")
 print("друге повідомленя:")
 print(" ")
 
-for x in range(1, 14, 2):
+for x in range(1, len(повідомленя), 2):
     print(повідомленя[x])
