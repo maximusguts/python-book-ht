@@ -111,8 +111,3 @@ while 1:
         time.sleep(3)
     time.sleep(0.01)
     Time = 1
-
-mainloop()
-
-if __name__ == '__main__':
-    canvas()
