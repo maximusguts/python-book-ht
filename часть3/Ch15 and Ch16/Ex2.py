@@ -17,24 +17,15 @@ class Game:
         self.bg2 = PhotoImage(file="GIMP/тло/тло для зявданя.png")
         w = self.bg.width()
         h = self.bg.height()
-        for x in range(0, 5, 2):
-            for y in range(0, 5, 2):
-                self.canvas.create_image(x * w, y * h, image=self.bg, anchor="nw")
-        for x in range(1, 5, 2):
-            for y in range(1, 5, 2):
-                self.canvas.create_image(x * w, y * h, image=self.bg, anchor="nw")
-        self.canvas.create_image(100, 0, image=self.bg2, anchor="nw")
-        self.canvas.create_image(300, 0, image=self.bg2, anchor="nw")
-        self.canvas.create_image(0, 100, image=self.bg2, anchor="nw")
-        self.canvas.create_image(200, 100, image=self.bg2, anchor="nw")
-        self.canvas.create_image(400, 100, image=self.bg2, anchor="nw")
-        self.canvas.create_image(100, 200, image=self.bg2, anchor="nw")
-        self.canvas.create_image(300, 200, image=self.bg2, anchor="nw")
-        self.canvas.create_image(0, 300, image=self.bg2, anchor="nw")
-        self.canvas.create_image(200, 300, image=self.bg2, anchor="nw")
-        self.canvas.create_image(400, 300, image=self.bg2, anchor="nw")
-        self.canvas.create_image(100, 400, image=self.bg2, anchor="nw")
-        self.canvas.create_image(300, 400, image=self.bg2, anchor="nw")
+        For = True
+        for x in range(0, 5):
+            for y in range(0, 5):
+                if For == True:
+                    self.canvas.create_image(x * w, y * h, image=self.bg, anchor="nw")
+                    For = False
+                else:
+                    self.canvas.create_image(x * w, y * h, image=self.bg2, anchor="nw")
+                    For = True
 
         self.sprites = []
         self.running = True

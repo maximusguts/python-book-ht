@@ -18,20 +18,20 @@ class Game:
         self.bg3 = PhotoImage(file="завд.png")
         w = self.bg.width()
         h = self.bg.height()
-        For = 1
+        images = {
+            1: self.bg,
+            2: self.bg2,
+            3: self.bg3
+        }
+        number = 1
         for x in range(0, 5):
             for y in range(0, 5):
-                if For == 4:
-                    For = 1
-                if For == 3:
-                    self.canvas.create_image(x * w, y * h, image=self.bg3, anchor="nw")
-                    For = 4
-                if For == 2:
-                    self.canvas.create_image(x * w, y * h, image=self.bg2, anchor="nw")
-                    For = 3
-                if For == 1:
-                    self.canvas.create_image(x * w, y * h, image=self.bg, anchor="nw")
-                    For = 2
+                number += 1
+                if number > 3:
+                    number = 1
+                self.canvas.create_image(x * w, y * h, image=images[number], anchor="nw")
+
+
 
         self.sprites = []
         self.running = True
