@@ -13,12 +13,26 @@ class Game:
         self.tk.update()
         self.canvas_height = 500
         self.canvas_width = 500
-        self.bg = PhotoImage(file="завд.png")
+        self.bg = PhotoImage(file="GIMP/тло/тло.png")
+        self.bg2 = PhotoImage(file="GIMP/тло/тло для зявданя.png")
+        self.bg3 = PhotoImage(file="завд.png")
         w = self.bg.width()
         h = self.bg.height()
-        for x in range(0, 2):
-            for y in range(0, 2):
-                self.canvas.create_image(x * w, y * h, image=self.bg, anchor="nw")
+        For = 1
+        for x in range(0, 5):
+            for y in range(0, 5):
+                if For == 4:
+                    For = 1
+                if For == 3:
+                    self.canvas.create_image(x * w, y * h, image=self.bg3, anchor="nw")
+                    For = 4
+                if For == 2:
+                    self.canvas.create_image(x * w, y * h, image=self.bg2, anchor="nw")
+                    For = 3
+                if For == 1:
+                    self.canvas.create_image(x * w, y * h, image=self.bg, anchor="nw")
+                    For = 2
+
         self.sprites = []
         self.running = True
 
