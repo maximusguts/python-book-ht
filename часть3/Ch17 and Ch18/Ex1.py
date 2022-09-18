@@ -40,7 +40,6 @@ class Coords:
         self.y2 = y2
 
 
-
 def within_x(co1, co2):
     if (co1.x1 > co2.x1 and co1.x1 < co2.x2) \
             or (co1.x2 > co2.x1 and co1.x2 < co2.x2) \
@@ -49,11 +48,6 @@ def within_x(co1, co2):
         return True
     else:
         return False
-
-    
-c1 = Coords(50, 50, 100, 100)
-c2 = Coords(40, 40, 150, 150)
-print(within_x(c1, c2))
 
 
 def within_y(co1, co2):
@@ -82,7 +76,7 @@ def collided_right(co1, co2):
 
 def collided_top(co1, co2):
     if within_x(co1, co2):
-        if co2.y2 >= co2.y2 and co1.y1 >= co2.y1:
+        if co1.y1 >= co2.y2 and co1.y1 >= co2.y1:
             return True
     return False
 
@@ -90,7 +84,7 @@ def collided_top(co1, co2):
 def collided_bottom(y, co1, co2):
     if within_x(co1, co2):
         y_cals = co1.y2 + y
-        if y_cals >= co2.y1 and y_cals <= co2.y1:
+        if y_cals >= co2.y1 and y_cals <= co2.y2:
             return True
     return False
 
@@ -99,13 +93,13 @@ class Sprite:
     def __init__(self, game):
         self.game = game
         self.endgame = False
-        self.cordinates = None
+        self.coordinates = None
 
     def move(self):
         pass
 
     def coords(self):
-        return self.cordinates
+        return self.coordinates
 
 
 class PlatformSprite(Sprite):
@@ -129,7 +123,7 @@ class StickFigureSprite(Sprite):
             PhotoImage(file="../Ch15 and Ch16/GIMP/Стік/стік2.png"),
             PhotoImage(file="../Ch15 and Ch16/GIMP/Стік/стік3.png")
         ]
-        self.image = game.canvas.create_image(40, 450, image=self.images_left[0], anchor="nw")
+        self.image = game.canvas.create_image(200, 470, image=self.images_left[0], anchor="nw")
         self.x = -2
         self.y = 0
         self.current_image = 0
@@ -140,7 +134,7 @@ class StickFigureSprite(Sprite):
         game.canvas.bind_all("<KeyPress-Left>", self.turn_left)
         game.canvas.bind_all("<KeyPress-Right>", self.turn_right)
         game.canvas.bind_all("<space>", self.jump)
-        game.canvas.bind_all("<KeyPress-Up>", self.jump)
+        # game.canvas.bind_all("<KeyPress-Up>", self.jump)
 
     def turn_left(self, evt):
         if self.y == 0:
@@ -209,36 +203,36 @@ class StickFigureSprite(Sprite):
         elif self.x < 0 and co.x1 <= 0:
             self.x = 0
             left = False
-            for sprite in self.game.sprites:
-                if sprite == self:
-                    continue
-                sprite_co = sprite.coords()
-                if top and self.y < 0 and collided_top(co, sprite_co):
-                    self.y = -self.y
-                    top = False
-                if bottom and self.y > 0 and collided_bottom(self.y, co, sprite_co):
-                    self.y = sprite_co.y1 - co.y2
-                    if self.y < 0:
-                        self.y = 0
-                    bottom = False
-                    top = False
-                if bottom and falling and self.y == 0\
-                        and co.y2 < self.game.canvas_height\
-                        and collided_bottom(1, co, sprite_co):
-                    falling = False
-                if left and self.x < 0 and collided_left(co, sprite_co):
-                    self.x = 0
-                    left = False
-                    if sprite.endgame:
-                        self.game.running = False
-                if right and self.x > 0 and collided_right(co, sprite_co):
-                    self.x = 0
-                    right = False
-                    if sprite.endgame:
-                        self.game.running = False
-            if falling and bottom and self.y == 0 and co.y2 < self.game.canvas_height:
-                self.y = 4
-            self.game.canvas.move(self.image, self.x, self.y)
+        for sprite in self.game.sprites:
+            if sprite == self:
+                continue
+            sprite_co = sprite.coords()
+            if top and self.y < 0 and collided_top(co, sprite_co):
+                self.y = -self.y
+                top = False
+            if bottom and self.y > 0 and collided_bottom(self.y, co, sprite_co):
+                self.y = sprite_co.y1 - co.y2
+                if self.y < 0:
+                    self.y = 0
+                bottom = False
+                top = False
+            if bottom and falling and self.y == 0 \
+                    and co.y2 < self.game.canvas_height \
+                    and collided_bottom(1, co, sprite_co):
+                falling = False
+            if left and self.x < 0 and collided_left(co, sprite_co):
+                self.x = 0
+                left = False
+                if sprite.endgame:
+                    self.game.running = False
+            if right and self.x > 0 and collided_right(co, sprite_co):
+                self.x = 0
+                right = False
+                if sprite.endgame:
+                    self.game.running = False
+        if falling and bottom and self.y == 0 and co.y2 < self.game.canvas_height:
+            self.y = 4
+        self.game.canvas.move(self.image, self.x, self.y)
 
 
 class DoorSprite(Sprite):
@@ -246,9 +240,10 @@ class DoorSprite(Sprite):
         Sprite.__init__(self, game)
         self.photo_image = photo_image
         self.image = game.canvas.create_image(x, y, image=self.photo_image, anchor="nw")
-        self.cordinates = Coords(x, y, x + (width / 2), y + height)
+        self.coordinates = Coords(x, y, x + (width / 2), y + height)
         self.endgame = True
 
+####################### Start Game #############################
 
 g = Game()
 platform1 = PlatformSprite(g, PhotoImage(file="../Ch15 and Ch16/GIMP/платформы/платформа3.png"), 0, 480, 100, 10)
