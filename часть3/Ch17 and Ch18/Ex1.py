@@ -69,7 +69,7 @@ def collided_left(co1, co2):
 
 def collided_right(co1, co2):
     if within_y(co1, co2):
-        if co1.x2 >= co2.x1 and co1.y1 >= co2.y1:
+        if co1.x2 >= co2.x1 and co1.x2 <= co2.x2:
             return True
     return False
 
@@ -147,7 +147,7 @@ class StickFigureSprite(Sprite):
     def jump(self, evt):
         if self.y == 0:
             self.y = -4
-            self.jump_count = 0
+            self.jump_count = 1
 
     def animate(self):
         if self.x != 0 and self.y == 0:
