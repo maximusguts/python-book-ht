@@ -225,7 +225,7 @@ class StickFigureSprite(Sprite):
                 left = False
                 if sprite.endgame:
                     self.game.running = False
-                    self.game.canvas.create_text(250, 100, text="перемога!", font=("courier", 26))
+                    self.game.canvas.create_text(250, 50, text="перемога!", font=("Helvetica", 26))
             if right and self.x > 0 and collided_right(co, sprite_co):
                 self.x = 0
                 right = False
